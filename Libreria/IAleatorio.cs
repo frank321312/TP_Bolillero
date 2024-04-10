@@ -2,5 +2,5 @@ namespace Libreria;
 
 public interface IAleatorio
 {
-    public int GenerarNumeroAleatorio(int cantidad);
+    public int GenerarNumeroAleatorio(Bolillero bolillero);
 }
