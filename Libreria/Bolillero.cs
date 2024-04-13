@@ -40,7 +40,7 @@ public class Bolillero
             }
             else
             {
-                System.Console.WriteLine("Malardo");
+                System.Console.WriteLine("Malardo"); 
             }
         }
     }

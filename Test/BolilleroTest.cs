@@ -1,10 +1,11 @@
-// namespace Test;
+namespace Test;
+using Xunit;
 
-// public class BolilleroTest
-// {
-//     [Fact]
-//     public void Primero()
-//     {
+public class BolilleroTest
+{
+    [Fact]
+    public void Primero()
+    {
         
-//     }
-// }
+    }
+}
