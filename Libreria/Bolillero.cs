@@ -2,46 +2,50 @@ namespace Libreria;
 
 public class Bolillero
 {
-    public List<int> bolillas = new List<int>();
-    public List<int> bolillasAfuera = new List<int>();
+    public List<int> bolillas { get; set; } = new List<int>();
+    public List<int> bolillasAfuera { get; set; } = new List<int>();
     public IAleatorio _aleatorio;
-    public int almacenarNumbero { get; set; }
-    public Bolillero(int cantidad)
+    public Bolillero(int cantidad) : this(cantidad, new NumeroRandom()) {}
+    public Bolillero(int cantidad, IAleatorio aleatorio)
     {
-        for (int i = 0; i < cantidad; i++)
-        {
-            bolillas.Add(i);
-        }
-        _aleatorio = new NumeroRandom();
-        almacenarNumbero = _aleatorio.GenerarNumeroAleatorio(cantidad);
+        for (var i = 0; i < cantidad; i++) { bolillas.Add(i); } 
+        _aleatorio = aleatorio;
     }
-    public void SacarUnaBolilla(int jugada)
-    {
-        if(bolillas[almacenarNumbero] == jugada)
-        {
-            bolillasAfuera.Add(almacenarNumbero);
-            bolillas.Remove(almacenarNumbero);
-            almacenarNumbero = _aleatorio.GenerarNumeroAleatorio(bolillas.Count);
-        }
-        else 
-        {
-            bolillasAfuera.Add(almacenarNumbero);
-            bolillas.Remove(almacenarNumbero);
-            almacenarNumbero = _aleatorio.GenerarNumeroAleatorio(bolillas.Count);
-        }
-    }
-    public void SacarVariasBolillas(List<int> jugadas)
+    public bool Jugada(List<int> jugadas)
     {
         foreach (var item in jugadas)
         {
-            if (item == bolillas[item])
+            if (item != SacarBolilla()) 
             {
-                System.Console.WriteLine("Le atinaste crack");
-            }
-            else
-            {
-                System.Console.WriteLine("Malardo"); 
+                return false;
             }
         }
+        return true;
+    }
+    public int JugarNVeces(List<int> jugadas, int cantidad)
+    {
+        int ganaNVeces = 0;
+        for (var i = 0; i < cantidad; i++)
+        {
+            ReingresarBolillas();
+            if (Jugada(jugadas)) 
+            {
+                ganaNVeces++;
+            }
+        }
+        return ganaNVeces;
+    }
+    public int SacarBolilla()
+    {
+        int numero = _aleatorio.GenerarNumeroAleatorio(this);
+        bolillasAfuera.Add(numero);
+        bolillas.Remove(numero);
+        return numero;
+    }
+    public void ReingresarBolillas()
+    {
+        bolillas.AddRange(bolillasAfuera);
+        bolillas.Sort();
+        bolillasAfuera.Clear();
     }
 }

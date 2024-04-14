@@ -2,5 +2,9 @@ namespace Libreria;
 
 public class NumeroRandom : IAleatorio
 {
-    public int GenerarNumeroAleatorio(int cantidad) => new Random().Next(0, cantidad);
+    public int GenerarNumeroAleatorio(Bolillero bolillero) 
+    {
+        int numero = new Random().Next(0, bolillero.bolillas.Count);
+        return bolillero.bolillas[numero];
+    }
 }
