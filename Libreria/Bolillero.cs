@@ -8,7 +8,7 @@ public class Bolillero : ICloneable
     public Bolillero(int cantidad) : this(cantidad, new NumeroRandom()) {}
     public Bolillero(int cantidad, IAleatorio aleatorio)
     {
-        for (var i = 0; i < cantidad; i++) { bolillas.Add(i); } 
+        for (var i = 0; i < cantidad; bolillas.Add(i++));
         _aleatorio = aleatorio;
     }
     public bool Jugada(List<int> jugadas)

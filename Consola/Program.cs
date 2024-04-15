@@ -6,7 +6,7 @@ Simulacion simulacion = new Simulacion();
 List<int> numeros = new List<int>() {0,1,2,3};    
 // System.Console.WriteLine(simulacion.SimularSinHilos(bolillero, numeros, 10000));
 
-System.Console.WriteLine(simulacion.SimularConHilos(bolillero, numeros, 100000));
+System.Console.WriteLine(simulacion.SimularConHilos(bolillero, numeros, 20, 4));
 
 // void Saludar()
 // {

@@ -1,36 +1,25 @@
 namespace Libreria;
 
-public class Simulacion 
+public class Simulacion
 {
     public long SimularSinHilos(Bolillero bolillero, List<int> jugada, int cantidad)
+        => bolillero.JugarNVeces(jugada, cantidad);
+    public long SimularConHilos(Bolillero bolillero, List<int> jugada, int cantidad, int hilos)
     {
         long ganaNVeces = 0;
-        for (var i = 0; i < cantidad; i++)
+        Task[] tareas = new Task[hilos];
+        for (int i = 0; i < hilos; i++)
         {
-            bolillero.ReingresarBolillas();
-            if (bolillero.Jugada(jugada))
-            {
-                ganaNVeces++;
-            }
+            tareas[i] = Task.Run(() => {
+                Bolillero clonarBolillero = (Bolillero)bolillero.Clone();
+                ganaNVeces += clonarBolillero.JugarNVeces(jugada, 1);
+            });
         }
-        return ganaNVeces;
-    }
-    public long SimularConHilos(Bolillero bolillero, List<int> jugada, int cantidad)
-    {
-        long ganaNVeces = 0;
+
         for (int i = 0; i < cantidad; i++)
         {
-            Task tarea = Task.Run(() => {
-                Bolillero clonarBolillero = (Bolillero)bolillero.Clone();
-                
-                if (clonarBolillero.Jugada(jugada))
-                {
-                    ganaNVeces++;
-                }
-            });
-
-            tarea.Wait();
         }
+            Task.WaitAll(tareas);
 
         return ganaNVeces;
     }
