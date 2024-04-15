@@ -1,10 +1,10 @@
 namespace Libreria;
 
-public class Bolillero
+public class Bolillero : ICloneable
 {
     public List<int> bolillas { get; set; } = new List<int>();
     public List<int> bolillasAfuera { get; set; } = new List<int>();
-    public IAleatorio _aleatorio;
+    public IAleatorio _aleatorio { get; set; }
     public Bolillero(int cantidad) : this(cantidad, new NumeroRandom()) {}
     public Bolillero(int cantidad, IAleatorio aleatorio)
     {
@@ -47,5 +47,16 @@ public class Bolillero
         bolillas.AddRange(bolillasAfuera);
         bolillas.Sort();
         bolillasAfuera.Clear();
+    }
+    public object Clone()
+    {
+        var copia = (Bolillero)this.MemberwiseClone();
+
+        copia.bolillas = new List<int>(this.bolillas);
+        copia.bolillasAfuera = new List<int>(this.bolillasAfuera);
+
+        copia._aleatorio = this._aleatorio;
+
+        return copia;
     }
 }
