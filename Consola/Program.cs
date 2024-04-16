@@ -3,10 +3,10 @@
 Bolillero bolillero = new Bolillero(10);
 Simulacion simulacion = new Simulacion();
 
-List<int> numeros = new List<int>() {0,1,2,3};    
+List<int> numeros = new List<int>() {0,1};    
 // System.Console.WriteLine(simulacion.SimularSinHilos(bolillero, numeros, 10000));
 
-System.Console.WriteLine(simulacion.SimularConHilos(bolillero, numeros, 20, 4));
+System.Console.WriteLine(simulacion.SimularConHilos(bolillero, numeros, 10000, 2));
 
 // void Saludar()
 // {
