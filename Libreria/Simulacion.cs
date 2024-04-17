@@ -6,22 +6,18 @@ public class Simulacion
         => bolillero.JugarNVeces(jugada, cantidad);
     public long SimularConHilos(Bolillero bolillero, List<int> jugada, int cantidad, int hilos)
     {
-        long ganaNVeces = 0;
-        Task[] tareas = new Task[hilos];
-        double result = cantidad / hilos;
-        for (int i = 0; i < hilos; i++)
+        Task<long>[] tareas = new Task<long>[hilos];
+        int result = cantidad / hilos;
+        for (long i = 0; i < hilos; i++)
         {
-            Bolillero clonarBolillero = (Bolillero)bolillero.Clone();
-            tareas[i] = Task.Run(() => {
-                for (int index = 0; index < result; index++)
-                {
-                    ganaNVeces += clonarBolillero.JugarNVeces(jugada, 1);                    
-                }
+            Bolillero clon = (Bolillero)bolillero.Clone();
+            tareas[i] = (Task<long>)Task.Run(() => {
+                clon.JugarNVeces(jugada, result);
             });
         }
         
         Task.WaitAll(tareas);
 
-        return ganaNVeces;
+        return tareas.Sum(t => t.Result);
     }
 }
