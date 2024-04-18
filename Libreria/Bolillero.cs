@@ -22,7 +22,7 @@ public class Bolillero : ICloneable
         }
         return true;
     }
-    public long JugarNVeces(List<int> jugadas, int cantidad)
+    public long JugarNVeces(List<int> jugadas, double cantidad)
     {
         long ganaNVeces = 0;
         for (var i = 0; i < cantidad; i++)
