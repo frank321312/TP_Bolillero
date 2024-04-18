@@ -15,8 +15,9 @@ public class Simulacion
             if (i == 0)
             {
                 tareas[i] = Task.Run(() => clon.JugarNVeces(jugada, result + res));
+            } else {
+                tareas[i] = Task.Run(() => clon.JugarNVeces(jugada, result));
             }
-            tareas[i] = Task.Run(() => clon.JugarNVeces(jugada, result));
         }
         
         Task.WaitAll(tareas);
