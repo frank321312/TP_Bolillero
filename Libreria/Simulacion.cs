@@ -12,7 +12,7 @@ public class Simulacion
         {
             Bolillero clon = (Bolillero)bolillero.Clone();
             tareas[i] = (Task<long>)Task.Run(() => {
-                clon.JugarNVeces(jugada, result);
+                return clon.JugarNVeces(jugada, result);
             });
         }
         
