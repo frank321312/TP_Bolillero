@@ -8,7 +8,9 @@ List<int> numeros = new List<int>() {0,1};
 
 // System.Console.WriteLine(simulacion.SimularConHilos(bolillero, numeros, 10, 3));
 
+double res = 29 % 5;
 
+System.Console.WriteLine(res);
 
 // void Saludar()
 // {

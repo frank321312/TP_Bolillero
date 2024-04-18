@@ -8,13 +8,14 @@ public class Simulacion
     {
         Task<long>[] tareas = new Task<long>[hilos];
         int result = cantidad / hilos;
-        if (cantidad % hilos != 0)
-        {
-            
-        }
+        int res = cantidad % hilos;
         for (long i = 0; i < hilos; i++)
         {
             Bolillero clon = (Bolillero)bolillero.Clone();
+            if (i == 0)
+            {
+                tareas[i] = Task.Run(() => clon.JugarNVeces(jugada, result + res));
+            }
             tareas[i] = Task.Run(() => clon.JugarNVeces(jugada, result));
         }
         
