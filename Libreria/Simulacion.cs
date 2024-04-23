@@ -20,4 +20,20 @@ public class Simulacion
 
         return tareas.Sum(t => t.Result);
     }
+    public async Task<long> SimularConHilosAsync(Bolillero bolillero, List<int> jugada, int cantidad, int hilos)
+    {
+        Task<long>[] tareas = new Task<long>[hilos];
+        long result = cantidad / hilos;
+        long res = cantidad % hilos;
+        for (long i = 1; i < hilos; i++)
+        {
+            Bolillero clon = (Bolillero)bolillero.Clone();
+                tareas[0] = Task.Run(() => clon.JugarNVeces(jugada, result + res));
+                tareas[i] = Task.Run(() => clon.JugarNVeces(jugada, result));
+        }
+
+        await Task.WhenAll(tareas);
+        
+        return tareas.Sum(t => t.Result);
+    }
 }
