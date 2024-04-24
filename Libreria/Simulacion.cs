@@ -10,15 +10,11 @@ public class Simulacion
         int result = cantidad / hilos;
         int res = cantidad % hilos;
 
-        Bolillero clonAfuera = (Bolillero)bolillero.Clone();
-        tareas[0] = Task.Run(() => clonAfuera.JugarNVeces(jugada, result + res));
+        tareas[0] = GenerarTaskSimulacion(bolillero, jugada, result + res);
 
         for (long i = 1; i < hilos; i++)
-        {
-            Bolillero clon = (Bolillero)bolillero.Clone();
-                tareas[i] = Task.Run(() => clon.JugarNVeces(jugada, result));
-        }
-        
+            tareas[i] = GenerarTaskSimulacion(bolillero, jugada, result);
+
         Task.WaitAll(tareas);
 
         return tareas.Sum(t => t.Result);
@@ -29,17 +25,19 @@ public class Simulacion
         long result = cantidad / hilos;
         long res = cantidad % hilos;
 
-        Bolillero clonAfuera = (Bolillero)bolillero.Clone();
-        tareas[0] = Task.Run(() => clonAfuera.JugarNVeces(jugada, result + res));
-        
+        tareas[0] = GenerarTaskSimulacion(bolillero, jugada, result + res);
+
         for (long i = 1; i < hilos; i++)
-        {
-            Bolillero clon = (Bolillero)bolillero.Clone();
-                tareas[i] = Task.Run(() => clon.JugarNVeces(jugada, result));
-        }
+            tareas[i] = GenerarTaskSimulacion(bolillero, jugada, result);        
 
         await Task.WhenAll(tareas);
         
         return tareas.Sum(t => t.Result);
+    }
+
+    private Task<long> GenerarTaskSimulacion(Bolillero bolillero, List<int> jugada, long cantidad)
+    {
+        var clon = (Bolillero)bolillero.Clone();
+        return Task.Run(() => clon.JugarNVeces(jugada, cantidad));
     }
 }
